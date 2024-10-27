@@ -4,9 +4,12 @@ import pandas as pd
 from io import BytesIO
 from reportlab.lib.pagesizes import letter
 from reportlab.pdfgen import canvas
+import matplotlib
+matplotlib.use('Agg')  # Força o uso do backend Agg
+import matplotlib.pyplot as plt
+import os
 from datetime import datetime, timedelta
 from apscheduler.schedulers.background import BackgroundScheduler
-import os
 
 app = Flask(__name__)
 DB_NAME = "vendas.db"
@@ -31,6 +34,64 @@ def init_db():
     conn.commit()
     conn.close()
 
+# Função para gerar gráficos de análise
+def generate_graphs(df):
+    image_paths = []
+    
+    try:
+        # Análise 1: Total de Vendas por Cliente
+        plt.figure(figsize=(10, 6))
+        total_sales_per_client = df.groupby('Nome_Cliente')['Total_Venda'].sum().nlargest(5)
+        total_sales_per_client.plot(kind='bar', title='Total de Vendas por Cliente', color='skyblue')
+        plt.ylabel('Total de Vendas')
+        plt.tight_layout()
+        img_path = "total_sales_per_client.png"
+        plt.savefig(img_path)
+        plt.close()
+        image_paths.append(img_path)
+
+        # Análise 2: Total de Vendas por Produto
+        plt.figure(figsize=(10, 6))
+        total_sales_per_product = df.groupby('Produto')['Total_Venda'].sum().nlargest(5)
+        total_sales_per_product.plot(kind='bar', title='Total de Vendas por Produto', color='salmon')
+        plt.ylabel('Total de Vendas')
+        plt.tight_layout()
+        img_path = "total_sales_per_product.png"
+        plt.savefig(img_path)
+        plt.close()
+        image_paths.append(img_path)
+
+        # Análise 3: Quantidade Total Vendida por Produto
+        plt.figure(figsize=(10, 6))
+        total_quantity_per_product = df.groupby('Produto')['Quantidade'].sum().nlargest(5)
+        total_quantity_per_product.plot(kind='bar', title='Quantidade Total Vendida por Produto', color='lightgreen')
+        plt.ylabel('Quantidade Vendida')
+        plt.tight_layout()
+        img_path = "quantity_per_product.png"
+        plt.savefig(img_path)
+        plt.close()
+        image_paths.append(img_path)
+
+        # Análise 4: Desempenho de Vendas ao Longo do Tempo
+        df['Data_Venda'] = pd.to_datetime(df['Data_Venda'])
+        sales_over_time = df.groupby(df['Data_Venda'].dt.to_period('M'))['Total_Venda'].sum()
+        
+        plt.figure(figsize=(10, 6))
+        sales_over_time.plot(kind='line', title='Desempenho de Vendas ao Longo do Tempo', marker='o')
+        plt.ylabel('Total de Vendas')
+        plt.xlabel('Data')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        img_path = "sales_over_time.png"
+        plt.savefig(img_path)
+        plt.close()
+        image_paths.append(img_path)
+
+    except Exception as e:
+        print(f"Erro ao gerar gráficos: {e}")
+
+    return image_paths
+
 # Função para gerar o relatório PDF
 def generate_report(pdf_name):
     global pdf_save_path
@@ -38,6 +99,9 @@ def generate_report(pdf_name):
         conn = sqlite3.connect(DB_NAME)
         df = pd.read_sql_query("SELECT * FROM vendas", conn)
         conn.close()
+
+        # Gerar gráficos
+        image_paths = generate_graphs(df)
 
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         pdf_filename = f"{pdf_name}_{timestamp}.pdf"
@@ -49,16 +113,32 @@ def generate_report(pdf_name):
 
         buffer = BytesIO()
         c = canvas.Canvas(buffer, pagesize=letter)
-        c.drawString(100, 750, "Relatório de Vendas - " + datetime.now().strftime("%Y-%m-%d"))
-        y = 700
-        for index, row in df.iterrows():
-            c.drawString(100, y, f"{row['Data_Venda']} - Cliente: {row['Nome_Cliente']} - Produto: {row['Produto']} - Total: {row['Total_Venda']}")
-            y -= 20
+        width, height = letter  # Tamanho da página
+        y = height - 50  # Espaço no topo da página
+
+        for img_path in image_paths:
+            img_width = 500  # Largura desejada da imagem
+            img_height = 300  # Altura desejada da imagem
+            
+            # Verificar se a imagem cabe na página
+            if y - img_height < 50:  # 50 é o espaço mínimo que deve ser deixado
+                c.showPage()  # Adiciona uma nova página ao PDF
+                y = height - 50  # Reinicia a posição Y na nova página
+
+            # Adicionar gráfico ao PDF
+            c.drawImage(img_path, 50, y - img_height, width=img_width, height=img_height)  # Ajuste o tamanho do gráfico
+            y -= img_height + 20  # Ajuste o espaço para o próximo gráfico
+
         c.save()
 
         buffer.seek(0)
         with open(pdf_filename, "wb") as f:
             f.write(buffer.read())
+
+        # Remover arquivos temporários
+        for img_path in image_paths:
+            os.remove(img_path)
+
     except Exception as e:
         print(f"Erro ao gerar o relatório: {e}")
 
@@ -110,7 +190,6 @@ def upload_file():
             except Exception as e:
                 print(f"Erro ao processar o arquivo CSV: {e}")
 
-    # Reinicializa o timer ao retornar ao upload
     next_run_interval = None
     return render_template("index.html")
 
@@ -146,41 +225,26 @@ def timer():
 @app.route("/stop")
 def stop():
     global scheduler, pdf_save_path, next_run_interval
-    # Para todos os jobs agendados
     for job in scheduler.get_jobs():
         scheduler.remove_job(job.id)
 
-    # Reinicializa o banco de dados
     init_db()  
-    pdf_save_path = ""  # Limpa o caminho para salvar PDFs
-    next_run_interval = None  # Reinicializa o intervalo do timer
+    pdf_save_path = ""  
+    next_run_interval = None  
 
     return redirect(url_for("upload_file"))
 
 # Endpoint para consultar dados de vendas
 @app.route("/api/vendas", methods=["GET"])
-def vendas():
+def get_vendas():
     conn = sqlite3.connect(DB_NAME)
-    df = pd.read_sql_query("SELECT * FROM vendas", conn)
+    cursor = conn.cursor()
+    cursor.execute("SELECT * FROM vendas")
+    vendas = cursor.fetchall()
     conn.close()
-    return df.to_json(orient="records")
-
-# Endpoint para análise básica
-@app.route("/api/analise", methods=["GET"])
-def analise():
-    conn = sqlite3.connect(DB_NAME)
-    df = pd.read_sql_query("SELECT * FROM vendas", conn)
-    conn.close()
-
-    analise = {
-        "total_vendas": df["Total_Venda"].sum(),
-        "total_produtos_vendidos": df["Quantidade"].sum(),
-        "media_valor_venda": df["Total_Venda"].mean()
-    }
-    return jsonify(analise)
+    return jsonify(vendas)
 
 if __name__ == "__main__":
     init_db()
-    if not scheduler.running:
-        scheduler.start()
+    scheduler.start()
     app.run(debug=True)

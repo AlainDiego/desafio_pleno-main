@@ -1,4 +1,5 @@
-Flask
-pandas
-SQLAlchemy
-reportlab
+Flask==2.2.3
+pandas==1.5.3
+reportlab==3.6.12
+matplotlib==3.7.1
+apscheduler==3.10.1
