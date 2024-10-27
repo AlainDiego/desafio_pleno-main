@@ -42,8 +42,10 @@ def generate_report(pdf_name):
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
         pdf_filename = f"{pdf_name}_{timestamp}.pdf"
 
-        # Define o caminho para salvar o PDF
-        pdf_filename = os.path.join(pdf_save_path, pdf_filename) if pdf_save_path else os.path.join(os.getcwd(), pdf_filename)
+        if pdf_save_path:
+            pdf_filename = os.path.join(pdf_save_path, pdf_filename)
+        else:
+            pdf_filename = os.path.join(os.getcwd(), pdf_filename)
 
         buffer = BytesIO()
         c = canvas.Canvas(buffer, pagesize=letter)
@@ -108,6 +110,8 @@ def upload_file():
             except Exception as e:
                 print(f"Erro ao processar o arquivo CSV: {e}")
 
+    # Reinicializa o timer ao retornar ao upload
+    next_run_interval = None
     return render_template("index.html")
 
 # Endpoint para obter o tempo restante até o próximo relatório
@@ -141,10 +145,16 @@ def timer():
 # Endpoint para parar o agendador e voltar ao upload
 @app.route("/stop")
 def stop():
-    global scheduler
-    if scheduler.running:
-        scheduler.shutdown(wait=False)  # Espera que os jobs em execução terminem
-    init_db()  # Reinicializa o banco de dados
+    global scheduler, pdf_save_path, next_run_interval
+    # Para todos os jobs agendados
+    for job in scheduler.get_jobs():
+        scheduler.remove_job(job.id)
+
+    # Reinicializa o banco de dados
+    init_db()  
+    pdf_save_path = ""  # Limpa o caminho para salvar PDFs
+    next_run_interval = None  # Reinicializa o intervalo do timer
+
     return redirect(url_for("upload_file"))
 
 # Endpoint para consultar dados de vendas
