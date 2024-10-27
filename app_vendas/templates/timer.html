@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="{{ url_for('static', filename='js/timer.js') }}" defer></script>
+    <title>Timer de Relatório</title>
+</head>
+<body>
+    <h1>Tempo Restante para o Próximo Relatório</h1>
+    <p>O próximo relatório será gerado em <span id="time-remaining">{{ time_remaining }}</span> segundos.</p>
+    <button onclick="stopScheduler()">Parar e Voltar</button>
+</body>
+</html>

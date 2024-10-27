@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <title>Upload de CSV</title>
+</head>
+<body>
+    <h1>Upload de CSV</h1>
+    <form method="POST" enctype="multipart/form-data">
+        <input type="file" name="file" accept=".csv" required>
+        <input type="text" name="pdf_name" placeholder="Nome do PDF" required>
+        <input type="text" name="pdf_save_path" placeholder="Caminho para salvar o PDF">
+        <select name="frequency" required>
+            <option value="minute">A cada minuto</option>
+            <option value="hour">A cada hora</option>
+            <option value="day">Diariamente</option>
+            <option value="month">Mensalmente</option>
+            <option value="year">Anualmente</option>
+        </select>
+        <button type="submit">Enviar</button>
+    </form>
+</body>
+</html>

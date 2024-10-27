@@ -1,0 +1,101 @@
+ID_Venda,Data_Venda,ID_Cliente,Nome_Cliente,Produto,Quantidade,Preco_Unitario,Total_Venda
+1,2024-09-20,105,Julia Santos,Impressora,3,600,1800
+2,2024-09-10,115,Camila Andrade,Webcam,5,200,1000
+3,2024-09-13,118,João Vieira,Notebook,3,3500,10500
+4,2024-09-09,118,João Vieira,Tablet,1,1500,1500
+5,2024-09-03,109,Ana Souza,Teclado,1,150,150
+6,2024-09-28,104,Rafael Machado,Fone de Ouvido,5,100,500
+7,2024-09-03,110,Fabio Almeida,Teclado,3,150,450
+8,2024-09-21,120,Lucas Barbosa,Fone de Ouvido,1,100,100
+9,2024-09-22,112,Renato Costa,Microfone,2,250,500
+10,2024-09-15,117,Laura Martins,Smartphone,3,1200,3600
+11,2024-09-04,117,Laura Martins,Monitor,1,800,800
+12,2024-09-10,112,Renato Costa,Webcam,1,200,200
+13,2024-09-03,103,Gabriel Neri,Notebook,5,3500,17500
+14,2024-09-24,101,Diego Porto,Smartphone,3,1200,3600
+15,2024-10-01,117,Laura Martins,Webcam,1,200,200
+16,2024-09-27,120,Lucas Barbosa,Mouse,2,70,140
+17,2024-09-28,115,Camila Andrade,Mouse,5,70,350
+18,2024-09-04,109,Ana Souza,Projetor,4,3000,12000
+19,2024-09-16,119,Beatriz Oliveira,Tablet,5,1500,7500
+20,2024-09-21,105,Julia Santos,Impressora,4,600,2400
+21,2024-09-30,107,Fernanda Lima,Microfone,1,250,250
+22,2024-09-03,118,João Vieira,Webcam,5,200,1000
+23,2024-09-04,114,Felipe Cardoso,Teclado,4,150,600
+24,2024-09-17,114,Felipe Cardoso,Webcam,2,200,400
+25,2024-09-26,114,Felipe Cardoso,Notebook,5,3500,17500
+26,2024-09-09,105,Julia Santos,Monitor,3,800,2400
+27,2024-09-19,116,Ricardo Araujo,Monitor,2,800,1600
+28,2024-09-07,116,Ricardo Araujo,Notebook,1,3500,3500
+29,2024-09-27,106,Pedro Silva,Webcam,3,200,600
+30,2024-09-23,119,Beatriz Oliveira,Tablet,5,1500,7500
+31,2024-09-19,110,Fabio Almeida,Notebook,2,3500,7000
+32,2024-09-28,119,Beatriz Oliveira,Tablet,2,1500,3000
+33,2024-10-01,106,Pedro Silva,Monitor,1,800,800
+34,2024-09-24,113,Paula Torres,Impressora,3,600,1800
+35,2024-09-18,107,Fernanda Lima,Notebook,3,3500,10500
+36,2024-09-05,108,Carlos Pereira,Impressora,4,600,2400
+37,2024-09-12,120,Lucas Barbosa,Mouse,4,70,280
+38,2024-09-14,114,Felipe Cardoso,Tablet,3,1500,4500
+39,2024-09-22,102,Luana Estevam,Microfone,3,250,750
+40,2024-10-01,117,Laura Martins,Monitor,2,800,1600
+41,2024-09-15,101,Diego Porto,Monitor,4,800,3200
+42,2024-09-17,104,Rafael Machado,Webcam,5,200,1000
+43,2024-09-21,105,Julia Santos,Fone de Ouvido,1,100,100
+44,2024-09-26,116,Ricardo Araujo,Projetor,4,3000,12000
+45,2024-09-25,120,Lucas Barbosa,Fone de Ouvido,2,100,200
+46,2024-10-01,115,Camila Andrade,Microfone,5,250,1250
+47,2024-09-30,108,Carlos Pereira,Projetor,3,3000,9000
+48,2024-09-04,118,João Vieira,Cadeira Gamer,5,1000,5000
+49,2024-09-30,102,Luana Estevam,Tablet,2,1500,3000
+50,2024-09-11,118,João Vieira,Cadeira Gamer,2,1000,2000
+51,2024-09-19,113,Paula Torres,Microfone,1,250,250
+52,2024-09-29,106,Pedro Silva,Microfone,4,250,1000
+53,2024-09-24,116,Ricardo Araujo,Mouse,1,70,70
+54,2024-09-17,105,Julia Santos,Webcam,1,200,200
+55,2024-09-22,119,Beatriz Oliveira,Projetor,5,3000,15000
+56,2024-09-10,105,Julia Santos,Smartphone,5,1200,6000
+57,2024-09-02,117,Laura Martins,Projetor,3,3000,9000
+58,2024-09-23,111,Mariana Rocha,Microfone,5,250,1250
+59,2024-09-27,113,Paula Torres,Monitor,5,800,4000
+60,2024-09-26,104,Rafael Machado,Notebook,5,3500,17500
+61,2024-09-14,117,Laura Martins,Mouse,2,70,140
+62,2024-09-02,116,Ricardo Araujo,Projetor,2,3000,6000
+63,2024-09-05,110,Fabio Almeida,Impressora,1,600,600
+64,2024-09-19,112,Renato Costa,Notebook,5,3500,17500
+65,2024-09-01,108,Carlos Pereira,Projetor,1,3000,3000
+66,2024-09-27,115,Camila Andrade,Fone de Ouvido,5,100,500
+67,2024-09-07,113,Paula Torres,Mouse,4,70,280
+68,2024-09-01,117,Laura Martins,Projetor,2,3000,6000
+69,2024-09-12,118,João Vieira,Microfone,2,250,500
+70,2024-09-07,116,Ricardo Araujo,Webcam,5,200,1000
+71,2024-09-21,104,Rafael Machado,Microfone,4,250,1000
+72,2024-09-24,109,Ana Souza,Mouse,2,70,140
+73,2024-09-09,110,Fabio Almeida,Impressora,1,600,600
+74,2024-09-07,102,Luana Estevam,Monitor,2,800,1600
+75,2024-09-30,106,Pedro Silva,Microfone,1,250,250
+76,2024-09-26,105,Julia Santos,Fone de Ouvido,1,100,100
+77,2024-09-18,107,Fernanda Lima,Impressora,3,600,1800
+78,2024-09-06,107,Fernanda Lima,Teclado,2,150,300
+79,2024-09-25,104,Rafael Machado,Tablet,2,1500,3000
+80,2024-09-11,118,João Vieira,Fone de Ouvido,3,100,300
+81,2024-09-03,115,Camila Andrade,Notebook,3,3500,10500
+82,2024-09-17,108,Carlos Pereira,Smartphone,4,1200,4800
+83,2024-09-15,115,Camila Andrade,Fone de Ouvido,2,100,200
+84,2024-09-26,113,Paula Torres,Impressora,4,600,2400
+85,2024-09-21,109,Ana Souza,Notebook,5,3500,17500
+86,2024-09-25,110,Fabio Almeida,Impressora,1,600,600
+87,2024-09-20,110,Fabio Almeida,Fone de Ouvido,4,100,400
+88,2024-09-04,116,Ricardo Araujo,Monitor,2,800,1600
+89,2024-09-05,106,Pedro Silva,Microfone,5,250,1250
+90,2024-09-22,104,Rafael Machado,Projetor,4,3000,12000
+91,2024-09-14,105,Julia Santos,Microfone,5,250,1250
+92,2024-09-06,120,Lucas Barbosa,Impressora,3,600,1800
+93,2024-09-28,106,Pedro Silva,Monitor,3,800,2400
+94,2024-09-28,116,Ricardo Araujo,Fone de Ouvido,3,100,300
+95,2024-09-25,106,Pedro Silva,Notebook,4,3500,14000
+96,2024-09-19,106,Pedro Silva,Cadeira Gamer,4,1000,4000
+97,2024-10-01,112,Renato Costa,Microfone,3,250,750
+98,2024-09-20,114,Felipe Cardoso,Tablet,5,1500,7500
+99,2024-09-22,115,Camila Andrade,Microfone,1,250,250
+100,2024-09-10,119,Beatriz Oliveira,Microfone,1,250,250
